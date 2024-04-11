@@ -14,7 +14,12 @@ namespace PaymentSystemApi.Services
         private readonly IBaseRespository<Customer> _customerRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CustomerService> _logger;
-
+        public CustomerService(IBaseRespository<Customer> customerRepository, IMapper mapper, ILogger<CustomerService> logger)
+        {
+            _customerRepository = customerRepository;
+            _mapper = mapper;
+            _logger = logger;
+        }
         public async Task<CustomerDTO> GetCustomerByIdAsync(int customerId)
         {
             var customer = await _customerRepository.GetByIdAsync(customerId);
@@ -50,7 +55,7 @@ namespace PaymentSystemApi.Services
                 TransactionHistory = customerDTO.TransactionHistory
 
             };
-            await _customerRepository.AddAsync(customer);
+            await _customerRepository.AddAsync(Customer);
 
             return true;
         }
